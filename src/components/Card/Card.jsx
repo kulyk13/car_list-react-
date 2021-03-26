@@ -1,14 +1,37 @@
+// import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Card.css";
 
-function Card(props) {
+function Card({
+  id,
+  make,
+  model,
+  year,
+  img,
+  color,
+  vin,
+  country,
+  rating,
+  price,
+  views,
+  seller,
+  vin_check,
+  top,
+  timestamp,
+  phone,
+  fuel,
+  engine_volume,
+  transmission,
+  odo,
+  consume,
+}) {
   return (
-    <div class="col card mb-3" data-id="">
-      <div class="row g-0">
-        <div class="col-4 card-img-wrap">
-          <a href="#" class="w-100">
+    <div className="col card mb-3" data-id="">
+      <div className="row g-0">
+        <div className="col-4 card-img-wrap">
+          <a href="#" className="w-100">
             <img
-              class="card-img"
+              className="card-img"
               width="1"
               height="1"
               loading="lazy"
@@ -17,12 +40,12 @@ function Card(props) {
             />
           </a>
         </div>
-        <div class="col-8 card-body-wrap">
+        <div className="col-8 card-body-wrap">
           <div className="card-body">
             <a href="#" className="card-title mb-3">
               BMW M3 1.4 (2010)
+              <FontAwesomeIcon icon={["fas", "star"]} />
             </a>
-            <FontAwesomeIcon icon={["fas", "star"]} />
             <div className="price-block mb-2">
               <span className="card-price text-success">2100 $</span>
               <span>•</span>
@@ -88,12 +111,12 @@ function Card(props) {
             </div>
           </div>
         </div>
-        <div class="col-12 card-footer">
-          <small class="text-muted">
-            <i class="far fa-clock"></i>13.06.98 17:53
+        <div className="col-12 card-footer">
+          <small className="text-muted">
+            <i className="far fa-clock"></i>21.12.20 17:53
           </small>
-          <small class="text-muted">
-            <i class="fas fa-eye"></i> 10
+          <small className="text-muted">
+            <i className="fas fa-eye"></i> 10
           </small>
         </div>
       </div>
