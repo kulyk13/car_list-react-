@@ -1,7 +1,8 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export default function MesonryButtons() {
-  masonryBtnsEl &&
-    masonryBtnsEl.addEventListener("click", (event) => {
-      const btnEl = event.target.closest(".btn-change");
+  handleClick(e) {
+      const btnEl = e.target.closest(".btn-change");
       if (btnEl) {
         let action = btnEl.dataset.action;
         if (action == "1") {
@@ -19,18 +20,22 @@ export default function MesonryButtons() {
         btnEl.classList.remove("btn-secondary");
         btnEl.classList.add("btn-success");
       }
-    });
+    };
   return (
     <div class="change-view col-1" id="masonryBtns">
       <button data-action="1" type="button" class="btn-change btn-success btn">
-        <i class="fas fa-bars"></i>
+        <i>
+          <FontAwesomeIcon icon={["fas", "bars"]} />
+        </i>
       </button>
       <button
         data-action="2"
         type="button"
         class="btn-change btn btn-secondary"
       >
-        <i class="fas fa-border-all"></i>
+        <i>
+          <FontAwesomeIcon icon={["fas", "border-all"]} />
+        </i>
       </button>
     </div>
   );

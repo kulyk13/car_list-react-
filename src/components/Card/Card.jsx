@@ -4,7 +4,7 @@ import "./Card.css";
 import { DataContext } from "../../data/DataContext";
 
 export default function Card({ car }) {
-  const { count } = useContext(DataContext);
+  const data = useContext(DataContext);
 
   return (
     <div className="col card mb-3" data-id="">

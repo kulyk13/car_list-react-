@@ -1,0 +1,76 @@
+html {
+  scroll-behavior: smooth;
+}
+a,
+span,
+::before,
+::after {
+  display: inline-flex;
+  text-decoration: none;
+  color: inherit;
+}
+a {
+  color: #0a58ca;
+}
+a:hover,
+a:focus-within {
+  text-decoration: underline;
+}
+ul {
+  padding-left: 0;
+}
+li {
+  list-style-type: none;
+}
+li > i {
+  color: #dc6253;
+  margin-right: 5px;
+}
+.main-title {
+  font-size: 50px;
+  font-weight: 700;
+  text-align: center;
+}
+.top-bar {
+  display: flex;
+  align-items: center;
+  border-top: 2px solid #000;
+}
+.filter-section {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.btn-submit::after {
+  content: "(" attr(data-count) ")";
+  margin-left: 5px;
+}
+.form-select {
+  width: 25%;
+}
+.btn-wish:hover {
+  color: #ffc107;
+}
+.change-view {
+  column-gap: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+.btn-change {
+  padding: 6px 7px;
+  border-radius: 5px;
+}
+.card-list.row-cols-2 {
+  justify-content: space-between;
+}
+.card-list.row-cols-2 > .col {
+  width: 49%;
+}
+.card-list.row-cols-2 .card-img-wrap,
+.card-list.row-cols-2 .card-body-wrap {
+  width: 100%;
+}
+.btn-more {
+  position: absolute;
+  bottom: -20px;
+  width: 10%;
+}
