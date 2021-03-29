@@ -1,30 +1,11 @@
-// import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Card.css";
+import { DataContext } from "../../data/DataContext";
 
-function Card({
-  id,
-  make,
-  model,
-  year,
-  img,
-  color,
-  vin,
-  country,
-  rating,
-  price,
-  views,
-  seller,
-  vin_check,
-  top,
-  timestamp,
-  phone,
-  fuel,
-  engine_volume,
-  transmission,
-  odo,
-  consume,
-}) {
+export default function Card({ car }) {
+  const { count } = useContext(DataContext);
+
   return (
     <div className="col card mb-3" data-id="">
       <div className="row g-0">
@@ -35,7 +16,7 @@ function Card({
               width="1"
               height="1"
               loading="lazy"
-              src="http://dummyimage.com/153x232.jpg/cc0000/ffffff"
+              src={car.img}
               alt=""
             />
           </a>
@@ -43,80 +24,121 @@ function Card({
         <div className="col-8 card-body-wrap">
           <div className="card-body">
             <a href="#" className="card-title mb-3">
-              BMW M3 1.4 (2010)
-              <FontAwesomeIcon icon={["fas", "star"]} />
+              {car.make} {car.model} {car.engine_volume} ({car.year})
             </a>
             <div className="price-block mb-2">
-              <span className="card-price text-success">2100 $</span>
+              <span className="card-price text-success">
+                <USDFormat price={car.price} />
+              </span>
               <span>•</span>
-              <span>60000</span>
+              <span>
+                <UAHFormat price={car.price} />
+              </span>
             </div>
-            <h4 className="card-rating text-warning">3</h4>
+            <h4 className="card-rating text-warning">
+              {/* <StarRating /> */}
+              {car.rating}
+            </h4>
             <div className="card-info mt-4">
               <ul className="main-info">
                 <li className="mb-3">
-                  <i className="fas fa-tachometer-alt"></i>
-                  39000 km
+                  <i>
+                    <FontAwesomeIcon icon={["fas", "tachometer-alt"]} />
+                  </i>
+                  {car.odo} km
                 </li>
                 <li>
-                  <i className="fas fa-gas-pump"></i>
-                  1,4 l
+                  <i>
+                    <FontAwesomeIcon icon={["fas", "gas-pump"]} />
+                  </i>
+                  {car.fuel}, {car.engine_volume} l
                 </li>
                 <li className="mb-3">
-                  <i className="fas fa-map-marker-alt"></i>
-                  Ukraine
+                  <i>
+                    <FontAwesomeIcon icon={["fas", "map-marker-alt"]} />
+                  </i>
+                  {car.country}
                 </li>
                 <li>
-                  <i className="fas fa-cogs"></i>
-                  MT
+                  <i>
+                    <FontAwesomeIcon icon={["fas", "cogs"]} />
+                  </i>
+                  {car.transmission}
                 </li>
               </ul>
               <div className="row fuel-consume mt-4 mb-4">
                 <h4>Витрати палива (л/100км):</h4>
                 <ul className="consume col-7 mt-3 mb-0">
                   <li>
-                    <i className="fas fa-city"></i>7
+                    <i>
+                      <FontAwesomeIcon icon={["fas", "city"]} />
+                    </i>
+                    {car.consume.city || "---"}
                   </li>
                   <li>
-                    <i className="fas fa-road"></i>8
+                    <i>
+                      <FontAwesomeIcon icon={["fas", "road"]} />
+                    </i>
+                    {car.consume.road || "---"}
                   </li>
                   <li>
-                    <i className="fas fa-exchange-alt"></i>
-                    7.5
+                    <i>
+                      <FontAwesomeIcon icon={["fas", "exchange-alt"]} />
+                    </i>
+                    {car.consume.mixed || "---"}
                   </li>
                 </ul>
               </div>
-              <div className="vin-block pe-3">
-                <span className="p-1 me-3">VIN</span>
-                <div className="card-vin">350008844984849</div>
-              </div>
-              <div className="vin-block pe-3 undefined">
-                <span className="p-1 me-3">VIN</span>
-                <div className="card-vin">Невідомий</div>
-              </div>
-              <div className="color mt-4">Колір: Червоний</div>
-              <div className="contact-block mt-4">
-                <a
-                  href="tel:+380956073448"
-                  className=" btn btn-primary call-num"
+              {car.vin ? (
+                <div
+                  className={
+                    "vin-block pe-3 " + (car.vin_check ? "check" : "uncheck")
+                  }
                 >
-                  <i className="fas fa-phone-alt me-1"></i>
+                  <span className="p-1 me-3">VIN</span>
+                  <div className="card-vin">{car.vin}</div>
+                </div>
+              ) : (
+                <div className="vin-block pe-3 undefined">
+                  <span className="p-1 me-3">VIN</span>
+                  <div className="card-vin">Невідомий</div>
+                </div>
+              )}
+              <div className="color mt-4">Колір: {car.color}</div>
+              <div className="contact-block mt-4">
+                <a href="tel:{phone}" className=" btn btn-primary call-num">
+                  <i className="me-2">
+                    <FontAwesomeIcon icon={["fas", "phone-alt"]} />
+                  </i>
                   Подзвонити
                 </a>
-                <p className="mb-0">Anton</p>
+                <p className="mb-0">{car.seller}</p>
               </div>
               <button type="button" className="save-star btn btn-secondary">
-                <i className="fas fa-star"></i>
+                <i>
+                  <FontAwesomeIcon icon={["fas", "star"]} />
+                </i>
               </button>
             </div>
           </div>
         </div>
         <div className="col-12 card-footer">
           <small className="text-muted">
-            <i className="far fa-clock"></i>21.12.20 17:53
+            <i>
+              <FontAwesomeIcon icon={["far", "clock"]} />
+            </i>
+            <i>
+              <DateFormat date={car.timestamp} />
+            </i>
+            <i>
+              <TimeFormat time={car.timestamp} />
+            </i>
           </small>
           <small className="text-muted">
-            <i className="fas fa-eye"></i> 10
+            <i>
+              <FontAwesomeIcon icon={["fas", "eye"]} />
+            </i>
+            {car.views}
           </small>
         </div>
       </div>
@@ -124,4 +146,60 @@ function Card({
   );
 }
 
-export default Card;
+function USDFormat({ price }) {
+  const currencyUSDFormatter = new Intl.NumberFormat("ru", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+  });
+  return currencyUSDFormatter.format(price);
+}
+
+function UAHFormat({ price }) {
+  const currencyUAHFormatter = new Intl.NumberFormat("ru", {
+    style: "currency",
+    currency: "UAH",
+    minimumFractionDigits: 0,
+    maximumSignificantDigits: 4,
+  });
+  let exchangeRateUSD = 27.9;
+  return currencyUAHFormatter.format(price * exchangeRateUSD);
+}
+
+function StarRating({ rating }) {
+  const [star, setStar] = useState([]);
+  for (let i = 0; i < 5; i++) {
+    if (rating - 0.5 > i) {
+      setStar((prev) => (prev += <FontAwesomeIcon icon={["fas", "star"]} />));
+    } else if (rating > i) {
+      setStar(
+        (prev) => (prev += <FontAwesomeIcon icon={["fas", "star-half-alt"]} />)
+      );
+    } else {
+      setStar((prev) => (prev += <FontAwesomeIcon icon={["far", "star"]} />));
+    }
+  }
+  // let starIcons = " ";
+  // for (let i = 0; i < 5; i++) {
+  //   if (rating - 0.5 > i) {
+  //     starIcons += <FontAwesomeIcon icon={["fas", "star"]} />;
+  //   } else if (rating > i) {
+  //     starIcons += <FontAwesomeIcon icon={["fas", "star-half-alt"]} />;
+  //   } else {
+  //     starIcons += <FontAwesomeIcon icon={["far", "star"]} />;
+  //   }
+  // }
+}
+
+function DateFormat({ date }) {
+  const dateFormatter = new Intl.DateTimeFormat();
+  return dateFormatter.format(date);
+}
+
+function TimeFormat({ time }) {
+  const timeFormatter = new Intl.DateTimeFormat(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return timeFormatter.format(time);
+}

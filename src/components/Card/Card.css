@@ -20,6 +20,7 @@
 }
 .main-info {
   columns: 2;
+  padding: 0;
 }
 .fuel-consume h4 {
   font-size: 14px;
@@ -89,9 +90,13 @@
   right: 15px;
   font-size: 22px;
 }
-.save-star:hover {
+.save-star:hover i {
   color: gold;
 }
+.text-muted i {
+  font-style: normal;
+  margin-right: 5px;
+}
 .text-muted:last-of-type {
-  margin-left: 20px;
+  margin-left: 10px;
 }
