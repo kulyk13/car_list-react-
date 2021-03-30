@@ -1,11 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Card.css";
-import { DataContext } from "../../data/DataContext";
 
 export default function Card({ car }) {
-  const data = useContext(DataContext);
-
   return (
     <div className="col card mb-3" data-id="">
       <div className="row g-0">
