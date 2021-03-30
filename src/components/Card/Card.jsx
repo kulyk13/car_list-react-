@@ -175,6 +175,7 @@ function StarRating({ rating }) {
     } else {
       setStar((prev) => (prev += <FontAwesomeIcon icon={["far", "star"]} />));
     }
+    return star;
   }
   // let starIcons = " ";
   // for (let i = 0; i < 5; i++) {
