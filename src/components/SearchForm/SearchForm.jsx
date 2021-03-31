@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { DataContext } from "../../data/DataContext";
 
-export default function SearchForm({ changeCars }) {
-  const cardsData = useContext(DataContext);
+export default function SearchForm() {
+  const {setCars: changeCars} = useContext(DataContext);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    let query = this.search.value.toLowerCase().trim().split(" "); //[mustang, ford]
+    console.log(e);
+    let query = e.target.search.value.toLowerCase().trim().split(" "); //[mustang, ford]
     const searchFields = ["make", "model", "year"];
-    let CARS = cardsData.filter((car) => {
+    const data = await fetch("./data/cars.json").then((r) => r.json());
+    let filteredCars = data.filter((car) => {
       return query.every((word) => {
         return (
           !word ||
@@ -18,7 +20,8 @@ export default function SearchForm({ changeCars }) {
         );
       });
     });
-    console.log("search result", CARS.length);
+    console.log("search result", filteredCars.length);
+    changeCars(filteredCars)
   }
   return (
     <form
@@ -41,7 +44,6 @@ export default function SearchForm({ changeCars }) {
           class="btn-search btn btn-outline-secondary"
           type="submit"
           aria-label="search"
-          value="hello"
         >
           Пошук
         </button>

@@ -1,8 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Card.css";
+import { DataContext } from "../../data/DataContext";
+import { 
+  currencyUSDFormatter,
+  currencyUAHFormatter,
+  dateFormatter,
+  timeFormatter } from "../../utils/formatters";
 
 export default function Card({ car }) {
+  const {usdRate} = useContext(DataContext);
+  let starIcons = [];
+  for (let i = 0; i < 5; i++) {
+    if (car.rating - 0.5 > i) {
+      starIcons.push(<FontAwesomeIcon icon={["fas", "star"]} />);
+    } else if (car.rating > i) {
+      starIcons.push(<FontAwesomeIcon icon={["fas", "star-half-alt"]} />);
+    } else {
+      starIcons.push(<FontAwesomeIcon icon={["far", "star"]} />);
+    }
+  }
   return (
     <div className="col card mb-3" data-id="">
       <div className="row g-0">
@@ -25,15 +42,15 @@ export default function Card({ car }) {
             </a>
             <div className="price-block mb-2">
               <span className="card-price text-success">
-                <USDFormat price={car.price} />
+                {currencyUSDFormatter.format(car.price)}
               </span>
               <span>•</span>
               <span>
-                <UAHFormat price={car.price} />
+                {usdRate && currencyUAHFormatter.format(car.price * usdRate)}
               </span>
             </div>
             <h4 className="card-rating text-warning">
-              {/* <StarRating /> */}
+              {starIcons}
               {car.rating}
             </h4>
             <div className="card-info mt-4">
@@ -125,10 +142,10 @@ export default function Card({ car }) {
               <FontAwesomeIcon icon={["far", "clock"]} />
             </i>
             <i>
-              <DateFormat date={car.timestamp} />
+              {dateFormatter.format(car.timestamp)}
             </i>
             <i>
-              <TimeFormat time={car.timestamp} />
+              {timeFormatter.format(car.timestamp)}
             </i>
           </small>
           <small className="text-muted">
@@ -141,63 +158,4 @@ export default function Card({ car }) {
       </div>
     </div>
   );
-}
-
-function USDFormat({ price }) {
-  const currencyUSDFormatter = new Intl.NumberFormat("ru", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
-  return currencyUSDFormatter.format(price);
-}
-
-function UAHFormat({ price }) {
-  const currencyUAHFormatter = new Intl.NumberFormat("ru", {
-    style: "currency",
-    currency: "UAH",
-    minimumFractionDigits: 0,
-    maximumSignificantDigits: 4,
-  });
-  let exchangeRateUSD = 27.9;
-  return currencyUAHFormatter.format(price * exchangeRateUSD);
-}
-
-function StarRating({ rating }) {
-  const [star, setStar] = useState([]);
-  for (let i = 0; i < 5; i++) {
-    if (rating - 0.5 > i) {
-      setStar((prev) => (prev += <FontAwesomeIcon icon={["fas", "star"]} />));
-    } else if (rating > i) {
-      setStar(
-        (prev) => (prev += <FontAwesomeIcon icon={["fas", "star-half-alt"]} />)
-      );
-    } else {
-      setStar((prev) => (prev += <FontAwesomeIcon icon={["far", "star"]} />));
-    }
-    return star;
-  }
-  // let starIcons = " ";
-  // for (let i = 0; i < 5; i++) {
-  //   if (rating - 0.5 > i) {
-  //     starIcons += <FontAwesomeIcon icon={["fas", "star"]} />;
-  //   } else if (rating > i) {
-  //     starIcons += <FontAwesomeIcon icon={["fas", "star-half-alt"]} />;
-  //   } else {
-  //     starIcons += <FontAwesomeIcon icon={["far", "star"]} />;
-  //   }
-  // }
-}
-
-function DateFormat({ date }) {
-  const dateFormatter = new Intl.DateTimeFormat();
-  return dateFormatter.format(date);
-}
-
-function TimeFormat({ time }) {
-  const timeFormatter = new Intl.DateTimeFormat(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  return timeFormatter.format(time);
 }

@@ -18,6 +18,9 @@
   font-size: 24px;
   font-weight: 700;
 }
+.card-rating > svg:last-child {
+  margin-right: 7px;
+}
 .main-info {
   columns: 2;
   padding: 0;

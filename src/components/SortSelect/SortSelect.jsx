@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { DataContext } from "../../data/DataContext";
 
-export default function SortSelect({ changeCars }) {
-  const { setCars } = useContext(DataContext);
+export default function SortSelect() {
+  const { setCars: changeCars } = useContext(DataContext);
 
   function handleChange(e) {
     console.log(e.target.value);
@@ -24,7 +24,7 @@ export default function SortSelect({ changeCars }) {
       className="form-select me-5"
       aria-label="Default select example"
     >
-      <option value="default">За замовчуванням</option>
+      {/* <option value="default">За замовчуванням</option> */}
       <option value="price/1">Від дешевих до дорогих</option>
       <option value="price/-1">Від дорогих до дешевих</option>
       <option value="timestamp/-1">Дата додавання</option>
