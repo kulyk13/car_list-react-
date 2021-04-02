@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DataContext } from "../../data/DataContext";
 
 export default function SearchForm() {
-  const {setCars: changeCars} = useContext(DataContext);
+  const { setCars: changeCars } = useContext(DataContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,27 +21,27 @@ export default function SearchForm() {
       });
     });
     console.log("search result", filteredCars.length);
-    changeCars(filteredCars)
+    changeCars(filteredCars);
   }
   return (
     <form
       onSubmit={handleSubmit}
       action="#"
-      class="col-6 form me-auto"
+      className="col-6 form me-auto"
       name="searchForm"
       id="searchForm"
     >
-      <div class="input-group">
+      <div className="input-group">
         <input
           type="search"
           name="search"
-          class="form-control"
+          className="form-control"
           placeholder="Введіть запит"
           aria-label="Search car"
           aria-describedby="button-addon2"
         />
         <button
-          class="btn-search btn btn-outline-secondary"
+          className="btn-search btn btn-outline-secondary"
           type="submit"
           aria-label="search"
         >

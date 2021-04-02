@@ -1,3 +1,6 @@
+import React, { useContext } from "react";
+import { DataContext } from "../../data/DataContext";
+
 export default function FilterForm() {
   filterFormEl.btnSubmit.dataset.count = CARS.length;
   filterFormEl.addEventListener("submit", function (event) {
@@ -47,15 +50,15 @@ export default function FilterForm() {
   </label>`;
   }
   function createPriceFilter(field, range) {
-    return `<label class="d-flex align-items-center">
+    return `<label className="d-flex align-items-center">
   від
   <input type="number" name="${field}" value="${range[0]}" min="${
       range[0]
-    }" max="${range[1] - 1}" step="1" class="border col-4 me-3 m-2">
+    }" max="${range[1] - 1}" step="1" className="border col-4 me-3 m-2">
   до
   <input type="number" name="${field}" value="${range[1]}" min="${
       range[0] + 1
-    }" max="${range[1]}" step="" class="border col-4 m-2">
+    }" max="${range[1]}" step="" className="border col-4 m-2">
   </label>`;
   }
   function createFilterSection(field, cars) {
@@ -70,7 +73,7 @@ export default function FilterForm() {
       });
     }
 
-    return `<fieldset class="filter-section d-flex flex-column p-1 mb-3">
+    return `<fieldset className="filter-section d-flex flex-column p-1 mb-3">
   <legend>${field}</legend>
   ${html}
 </fieldset>`;

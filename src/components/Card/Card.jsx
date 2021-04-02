@@ -2,14 +2,15 @@ import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Card.css";
 import { DataContext } from "../../data/DataContext";
-import { 
+import {
   currencyUSDFormatter,
   currencyUAHFormatter,
   dateFormatter,
-  timeFormatter } from "../../utils/formatters";
+  timeFormatter,
+} from "../../utils/formatters";
 
 export default function Card({ car }) {
-  const {usdRate} = useContext(DataContext);
+  const { usdRate } = useContext(DataContext);
   let starIcons = [];
   for (let i = 0; i < 5; i++) {
     if (car.rating - 0.5 > i) {
@@ -120,7 +121,10 @@ export default function Card({ car }) {
               )}
               <div className="color mt-4">Колір: {car.color}</div>
               <div className="contact-block mt-4">
-                <a href="tel:{phone}" className=" btn btn-primary call-num">
+                <a
+                  href={"tel:" + car.phone}
+                  className=" btn btn-primary call-num"
+                >
                   <i className="me-2">
                     <FontAwesomeIcon icon={["fas", "phone-alt"]} />
                   </i>
@@ -141,12 +145,8 @@ export default function Card({ car }) {
             <i>
               <FontAwesomeIcon icon={["far", "clock"]} />
             </i>
-            <i>
-              {dateFormatter.format(car.timestamp)}
-            </i>
-            <i>
-              {timeFormatter.format(car.timestamp)}
-            </i>
+            <i>{dateFormatter.format(car.timestamp)}</i>
+            <i>{timeFormatter.format(car.timestamp)}</i>
           </small>
           <small className="text-muted">
             <i>
