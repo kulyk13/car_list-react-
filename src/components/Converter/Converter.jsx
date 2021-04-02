@@ -3,28 +3,90 @@ import { DataContext } from "../../data/DataContext";
 
 export default function Converter() {
   const { allRates } = useContext(DataContext);
-  const [val1, setVal1] = useState("");
-  const [val2, setVal2] = useState("");
+  const [val1, setVal1] = useState(0);
+  const [val2, setVal2] = useState(0);
+  const [curr1, setCurr1] = useState("");
+  const [curr2, setCurr2] = useState("");
 
-  function changeCurrency(e) {
-    if (e.target.value === "UAH") {
-      console.log("UAH");
-    } else if (e.target.value === "USD") {
-      console.log("USD");
-    } else if (e.target.value === "EUR") {
-      console.log("EUR");
-    } else if (e.target.value === "RUR") {
-      console.log("RUR");
+  const [sel1, setSel1] = useState(true);
+  const [sel2, setSel2] = useState(true);
+
+  useEffect(() => {
+    if (allRates.length > 0) {
+      setCurr1("UAH");
+      setCurr2("EUR");
+      console.log(allRates);
     }
-  }
+  }, [allRates]);
+
+  useEffect(() => {
+    if (allRates.length > 0) {
+      changeCurr1(val1);
+    }
+  }, [sel1]);
+  useEffect(() => {
+    if (allRates.length > 0) {
+      changeCurr2(val2);
+    }
+  }, [sel2]);
+
   function change1(e) {
     setVal1(e.target.value);
-    setVal2((e.target.value * allRates[0].sale).toFixed(2));
+    changeCurr1(e.target.value);
   }
+  function changeCurr1(val) {
+    if (curr1 === "UAH") {
+      console.log("change1 curr1 == uah");
+      let anotherCurr = allRates.find((c) => c.ccy === curr2);
+      setVal2((val / anotherCurr.sale).toFixed(2));
+    } else if (curr2 === "UAH") {
+      console.log("change1 curr2 == uah");
+      let thisCurr = allRates.find((c) => c.ccy === curr1);
+      setVal2((val * thisCurr.sale).toFixed(2));
+    } else {
+      console.log("change1 curr !== uah");
+      let thisCurr = allRates.find((c) => c.ccy === curr1);
+      let anotherCurr = allRates.find((c) => c.ccy === curr2);
+      setVal2(((val * thisCurr.sale) / anotherCurr.sale).toFixed(2));
+    }
+  }
+
   function change2(e) {
     setVal2(e.target.value);
-    setVal1((e.target.value / allRates[0].sale).toFixed(2));
+    changeCurr2(e.target.value);
   }
+  function changeCurr2(val) {
+    if (curr2 === "UAH") {
+      console.log("change2 curr1 == uah");
+      let anotherCurr = allRates.find((c) => c.ccy === curr1);
+      setVal1((val / anotherCurr.sale).toFixed(2));
+    } else if (curr1 === "UAH") {
+      console.log("change2 curr2 == uah");
+      let thisCurr = allRates.find((c) => c.ccy === curr2);
+      setVal1((val * thisCurr.sale).toFixed(2));
+    } else {
+      console.log("change2 curr !== uah");
+      let thisCurr = allRates.find((c) => c.ccy === curr2);
+      let anotherCurr = allRates.find((c) => c.ccy === curr1);
+      setVal1(((val * thisCurr.sale) / anotherCurr.sale).toFixed(2));
+    }
+  }
+  function changeCurr(e) {
+    if (e.target.name === "curr1") {
+      if (e.target.value === curr2) {
+        setCurr2(curr1);
+      }
+      setCurr1(e.target.value);
+      setSel1(!sel1);
+    } else if (e.target.name === "curr2") {
+      if (e.target.value === curr1) {
+        setCurr1(curr2);
+      }
+      setCurr2(e.target.value);
+      setSel2(!sel2);
+    }
+  }
+
   return (
     <div className="converter pt-3">
       <div className="field mb-2">
@@ -35,16 +97,16 @@ export default function Converter() {
           onChange={change1}
           min="0"
         />
-        <select
-          onChange={changeCurrency}
-          name="selectCurrency"
-          id="selectCurrency1"
-          defaultValue="USD"
-        >
-          <option value="UAH">UAH</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="RUR">RUR</option>
+        <select onChange={changeCurr} name="curr1" value={curr1}>
+          <option value={"UAH"}>UAH</option>
+          {allRates.map(
+            (curr) =>
+              curr.ccy !== "BTC" && (
+                <option key={curr.ccy} value={curr.ccy}>
+                  {curr.ccy}
+                </option>
+              )
+          )}
         </select>
       </div>
       <div className="field">
@@ -55,16 +117,16 @@ export default function Converter() {
           onChange={change2}
           min="0"
         />
-        <select
-          onChange={changeCurrency}
-          name="selectCurrency"
-          id="selectCurrency2"
-          defaultValue="UAH"
-        >
-          <option value="UAH">UAH</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="RUR">RUR</option>
+        <select onChange={changeCurr} name="curr2" value={curr2}>
+          <option value={"UAH"}>UAH</option>
+          {allRates.map(
+            (curr) =>
+              curr.ccy !== "BTC" && (
+                <option key={curr.ccy} value={curr.ccy}>
+                  {curr.ccy}
+                </option>
+              )
+          )}
         </select>
       </div>
     </div>

@@ -17,6 +17,7 @@ function App() {
   const [cars, setCars] = useState([]);
   const [usdRate, setUsdRate] = useState(null);
   const [allRates, setAllRates] = useState([]);
+  const [view, setView] = useState("row-cols-1");
 
   async function getCars() {
     const data = await fetch("./data/cars.json").then((r) => r.json());
@@ -37,7 +38,7 @@ function App() {
     })();
   }, []);
   return (
-    <DataContext.Provider value={{ cars, setCars, usdRate, allRates }}>
+    <DataContext.Provider value={{ cars, setCars, usdRate, allRates, view, setView }}>
       <div className="container">
         <Converter />
         <h1 className="main-title pt-4">Car list</h1>

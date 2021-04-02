@@ -14,11 +14,11 @@ export default function Card({ car }) {
   let starIcons = [];
   for (let i = 0; i < 5; i++) {
     if (car.rating - 0.5 > i) {
-      starIcons.push(<FontAwesomeIcon icon={["fas", "star"]} />);
+      starIcons.push(<FontAwesomeIcon key={car.rating + i} icon={["fas", "star"]} />);
     } else if (car.rating > i) {
-      starIcons.push(<FontAwesomeIcon icon={["fas", "star-half-alt"]} />);
+      starIcons.push(<FontAwesomeIcon key={car.rating + i} icon={["fas", "star-half-alt"]} />);
     } else {
-      starIcons.push(<FontAwesomeIcon icon={["far", "star"]} />);
+      starIcons.push(<FontAwesomeIcon key={car.rating + i} icon={["far", "star"]} />);
     }
   }
   return (
