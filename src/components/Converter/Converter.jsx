@@ -8,7 +8,7 @@ export default function Converter() {
 
   function changeCurrency(e) {
     if (e.target.value === "UAH") {
-      if (val1) console.log("UAH");
+      console.log("UAH");
     } else if (e.target.value === "USD") {
       console.log("USD");
     } else if (e.target.value === "EUR") {

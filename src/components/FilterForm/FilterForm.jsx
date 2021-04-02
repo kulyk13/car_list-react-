@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import { DataContext } from "../../data/DataContext";
 
 export default function FilterForm() {
-  filterFormEl.btnSubmit.dataset.count = CARS.length;
-  filterFormEl.addEventListener("submit", function (event) {
-    event.preventDefault();
-    CARS = filterCars(this);
+  const { cars } = useContext(DataContext);
+  filterFormEl.btnSubmit.dataset.count = cars.length;
+  function filter(e) {
+    e.preventDefault();
+    cars = filterCars(e.target);
     renderCards(CARS, cardListEl, true);
-  });
+  }
   filterFormEl.addEventListener("change", function (event) {
     console.log(filterCars(this).length);
     this.btnSubmit.dataset.count = filterCars(this).length;
